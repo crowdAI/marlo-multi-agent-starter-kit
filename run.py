@@ -32,14 +32,20 @@ def get_join_tokens():
     else:
         """
             When debugging locally,
-            Please ensure that you have a Minecraft client running on port 10000
+            Please ensure that you have a Minecraft client running on port 10000 and 10001
             by doing : 
             $MALMO_MINECRAFT_ROOT/launchClient.sh -port 10000
+            $MALMO_MINECRAFT_ROOT/launchClient.sh -port 10001
         """
-        client_pool = [('127.0.0.1', 10000)]
-        join_tokens = marlo.make('MarLo-FindTheGoal-v0',
+        print("Generating join tokens locally...")
+        client_pool = [('127.0.0.1', 10000), ('127.0.0.1', 10001)]
+        join_tokens = marlo.make('MarLo-BuildbattleTrain1-v0',
                                  params={
-                                    "client_pool": client_pool
+                                    "client_pool": client_pool,
+                                    "agent_names" : [
+                                        "MarLo-Agent-0",
+                                        "MarLo-Agent-1"
+                                    ]
                                  })
     return join_tokens
 
