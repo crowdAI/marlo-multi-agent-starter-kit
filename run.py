@@ -91,7 +91,7 @@ def run_episode():
     """
     for _idx, join_token in enumerate(join_tokens):
         # Run agent-N on a separate thread
-        thread_handler, _ = run_agent(join_token)
+        thread_handler, _ = run_agent(join_token, _idx)
         
         # Accumulate thread handlers
         thread_handlers.append(thread_handler)
