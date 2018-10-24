@@ -1,5 +1,5 @@
 {
-    "challenge_id" : "crowdai-marLo-2018",
+    "challenge_id" : "crowdai-marLo-2018-multi",
     "grader_id": "crowdai-marLo-2018-multi",
     "authors" : ["spMohanty"],
     "description" : "marLo random agent",
