@@ -43,6 +43,21 @@ def get_join_tokens():
                                  })
     return join_tokens
 
+@marlo.threaded
+def run_agent(join_token):
+    env = marlo.init(join_token)
+    observation = env.reset()
+    done = False
+    count = 0
+    while not done:
+        _action = env.action_space.sample()
+        obs, reward, done, info = env.step(_action)
+        print("reward:", reward)
+        print("done:", done)
+        print("info", info)
+    
+    # It is important to do this env.close()        
+    env.close()
 
 def run_episode():
     """
@@ -50,28 +65,19 @@ def run_episode():
     """
     join_tokens = get_join_tokens()
 
-    # As this is a single agent scenario,there will just be a single token
-    assert len(join_tokens) == 1
-    join_token = join_tokens[0]
-    #
-    # # Initialize the environment
-    env = marlo.init(join_token)
-
-    # Get the first observation
-    observation = env.reset()
-
-    # Enter game loop
-    done = False
-    while not done:
-        _action = env.action_space.sample()
-        observation, reward, done, info = env.step(_action)
-        print("reward:", reward)
-        print("done:", done)
-        print("info", info)
-
-    # It is important to do this env.close()
-    env.close()
-
+    # As this is a two agent scenario,there will two join tokens
+    assert len(join_tokens) == 2
+    
+    # Run agent-0 on a separate thread
+    thread_handler_0, _ = run_agent(join_tokens[0])
+    # Run agent-1 on a separate thread
+    thread_handler_1, _ = run_agent(join_tokens[1])
+    
+    # Wait for both the threads to complete execution
+    thread_handler_0.join()
+    thread_handler_1.join()
+    
+    print("Episode Run Complete")
 
 if __name__ == "__main__":
     """
