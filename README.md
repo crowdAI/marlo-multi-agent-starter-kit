@@ -5,11 +5,11 @@
 
 ![FindTheGoal](https://media.giphy.com/media/1gWkQbDsHOfo4kZXZv/giphy.gif)
 
-Instructions to participate in the first round of the [MarLo challenge](https://www.crowdai.org/challenges/marlo-2018). 
+Instructions to participate in the second round of the [MarLo challenge](https://www.crowdai.org/challenges/marlo-2018). 
 
-The task is to submit code which controls *two* agents which can maximise the cumulative reward from both the agents in a series of two-agent environments in [MarLo](https://marlo.readthedocs.io).
+The task is to submit code which controls an *arbitrary* number of agents which can maximise the cumulative reward for all the agents in a series of N-agent environments in [MarLo](https://marlo.readthedocs.io).
 
-Participants will have to submit their code, with packaging specifications, and the evaluator will automatically build a docker image and execute their agent against different instantiations of multiple two-agent environments across three tasks.
+Participants will have to submit their code, with packaging specifications, and the evaluator will automatically build a docker image and execute their agent against different instantiations of multiple N-agent environments across three tasks.
 
 ### Setup
 * **docker** : By following the instructions [here](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
@@ -101,7 +101,7 @@ docker run --net=host -it $IMAGE_NAME /home/crowdai/run.sh
 ```
 This is used to map your submission to the said challenge, so please remember to use the correct `challenge_id` and `grader_id` as specified above.
 
-Please specify if your code will a GPU or not for the evaluation of your model. If you specify `true` for the GPU, two **NVIDIA Tesla K80 GPUs** will be provided and used for the evaluation. Their corresponding device ids will be `0` and `1` respectively.
+Please specify if your code will require GPU or not for the evaluation of your model. If you specify `true` for the GPU, then `N` number of GPUs will be made available if your code is expected to control `N` agents.
 
 ### Packaging of your software environment
 You can specify your software environment by using all the [available configuration options of repo2docker](https://repo2docker.readthedocs.io/en/latest/config_files.html). (But please remember to use [crowdai-repo2docker](https://pypi.org/project/crowdai-repo2docker/) to have GPU support)   

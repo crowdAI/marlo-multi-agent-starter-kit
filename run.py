@@ -50,7 +50,12 @@ def get_join_tokens():
     return join_tokens
 
 @marlo.threaded
-def run_agent(join_token):
+def run_agent(join_token, agent_id):
+    """
+        Where agent_id is an integral number starting from 0
+        In case, you have requested GPUs, then the agent_id will match 
+        the GPU device id assigneed to this agent.
+    """
     env = marlo.init(join_token)
     observation = env.reset()
     done = False
@@ -62,7 +67,7 @@ def run_agent(join_token):
         print("done:", done)
         print("info", info)
     
-    # It is important to do this env.close()        
+    # It is important to do this env.close()   
     env.close()
 
 def run_episode():
@@ -70,18 +75,30 @@ def run_episode():
     Single episode run
     """
     join_tokens = get_join_tokens()
-
-    # As this is a two agent scenario,there will two join tokens
-    assert len(join_tokens) == 2
     
-    # Run agent-0 on a separate thread
-    thread_handler_0, _ = run_agent(join_tokens[0])
-    # Run agent-1 on a separate thread
-    thread_handler_1, _ = run_agent(join_tokens[1])
+    # When the required number of episodes are evaluated
+    # The evaluator returns False for join_tokens
+    if not join_tokens:
+        return
+        
+    thread_handlers = []
     
-    # Wait for both the threads to complete execution
-    thread_handler_0.join()
-    thread_handler_1.join()
+    """
+    NOTE: If instead of a dynamic loop, you hard code the run_agent 
+    function calls, then the evaluation of your code will fail in case 
+    of a tournament, where multiple submissions can control different agents 
+    in the same game. 
+    """
+    for _idx, join_token in enumerate(join_tokens):
+        # Run agent-N on a separate thread
+        thread_handler, _ = run_agent(join_token)
+        
+        # Accumulate thread handlers
+        thread_handlers.append(thread_handler)
+    
+    # Wait for  threads to complete
+    for thread_handler in thread_handlers:
+        thread_handler.join()    
     
     print("Episode Run Complete")
 
