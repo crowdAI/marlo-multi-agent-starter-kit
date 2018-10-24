@@ -1,5 +1,5 @@
 ![CrowdAI-Logo](https://github.com/crowdAI/crowdai/raw/master/app/assets/images/misc/crowdai-logo-smile.svg?sanitize=true)
-# marlo-single-agent-starter-kit
+# marlo-multi-agent-starter-kit
 
 [![gitter-badge](https://badges.gitter.im/Microsoft/malmo.png)](https://gitter.im/Microsoft/malmo)   
 
@@ -7,9 +7,9 @@
 
 Instructions to participate in the first round of the [MarLo challenge](https://www.crowdai.org/challenges/marlo-2018). 
 
-The task is to submit an agent which can maximise the cumulative reward in the [FindTheGoal-v0](https://marlo.readthedocs.io/en/latest/marlo.envs.FindTheGoal.main.html#module-marlo.envs.FindTheGoal.main) environment in [MarLo](https://marlo.readthedocs.io).
+The task is to submit code which controls *two* agents which can maximise the cumulative reward from both the agents in a series of two-agent environments in [MarLo](https://marlo.readthedocs.io).
 
-Participants will have to submit their code, with packaging specifications, and the evaluator will automatically build a docker image and execute their agent against different instantiations of the `FindTheGoal` environment.
+Participants will have to submit their code, with packaging specifications, and the evaluator will automatically build a docker image and execute their agent against different instantiations of multiple two-agent environments across three tasks.
 
 ### Setup
 * **docker** : By following the instructions [here](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
@@ -39,18 +39,18 @@ conda install pytorch torchvision -c pytorch
 
 ### Clone repository 
 ```
-git clone git@github.com:crowdAI/marlo-single-agent-starter-kit.git
-cd marlo-single-agent-starter-kit
+git clone git@github.com:crowdAI/marlo-multi-agent-starter-kit.git
+cd marlo-multi-agent-starter-kit
 ```
 
 ### Build Docker Image locally 
 ```
-cd marlo-single-agent-starter-kit
+cd marlo-multi-agent-starter-kit
 
 # The following are the contents of the ./build.sh file
 # Hence you can alternatively call ./build.sh for the same effect.
 
-export IMAGE_NAME="marlo_random_agent"
+export IMAGE_NAME="marlo_random_agents"
 
 crowdai-repo2docker --no-run \
   --user-id 1001 \
@@ -63,22 +63,25 @@ This should take some time, but it will build a docker image out of the this rep
 ### Test Submission Locally
 Assuming you have docker and the rest of the dependencies installed..
 ```
-cd marlo-single-agent-starter-kit
+cd marlo-multi-agent-starter-kit
 # The following are the contents of the ./test_submission_locally.sh file
 # Hence you can alternatively call ./test_submission_locally.sh for the same effect.
 
-export IMAGE_NAME="marlo_random_agent"
+export IMAGE_NAME="marlo_random_agents"
 
 # Build Image from the repository
 ./build.sh
 
-# Ensure you have a Minecraft Client running on port 10000
-# by doing : $MALMO_MINECRAFT_ROOT/launchClient.sh -port 10000
+# Ensure you have a Minecraft Clients running on port 10000 and 10001
+# by doing : 
+#    $MALMO_MINECRAFT_ROOT/launchClient.sh -port 10000
+# and 
+#    $MALMO_MINECRAFT_ROOT/launchClient.sh -port 10001
 
 docker run --net=host -it $IMAGE_NAME /home/crowdai/run.sh
 
-# Now if everything works out well, then you should see the agent inside
-# the docker container interacting with the minecraft client on your host.
+# Now if everything works out well, then you should see the agents inside
+# the docker container interacting with the minecraft clients on your host.
 ```
 
 ## Important Concepts
@@ -89,7 +92,7 @@ docker run --net=host -it $IMAGE_NAME /home/crowdai/run.sh
 ```json
 {
   "challenge_id" : "crowdai-marLo-2018",
-  "grader_id" : "crowdai-marLo-2018",
+  "grader_id" : "crowdai-marLo-2018-multi",
   "authors" : ["your-crowdai-username"],
   "description" : "sample description about your awesome marlo agent",
   "license" : "MIT",
@@ -98,7 +101,7 @@ docker run --net=host -it $IMAGE_NAME /home/crowdai/run.sh
 ```
 This is used to map your submission to the said challenge, so please remember to use the correct `challenge_id` and `grader_id` as specified above.
 
-Please specify if your code will a GPU or not for the evaluation of your model. If you specify `true` for the GPU, a **NVIDIA Tesla K80 GPU** will be provided and used for the evaluation.
+Please specify if your code will a GPU or not for the evaluation of your model. If you specify `true` for the GPU, two **NVIDIA Tesla K80 GPUs** will be provided and used for the evaluation. Their corresponding device ids will be `0` and `1` respectively.
 
 ### Packaging of your software environment
 You can specify your software environment by using all the [available configuration options of repo2docker](https://repo2docker.readthedocs.io/en/latest/config_files.html). (But please remember to use [crowdai-repo2docker](https://pypi.org/project/crowdai-repo2docker/) to have GPU support)   
@@ -136,9 +139,9 @@ Then you can create a submission by making a *tag push* to your repository on [h
 Then you can add the correct git remote, and finally submit by doing : 
 
 ```
-cd marlo-single-agent-starter-kit
+cd marlo-multi-agent-starter-kit
 # Add crowdAI git remote endpoint
-git remote add crowdai git@gitlab.crowdai.org:<YOUR_CROWDAI_USER_NAME>/marlo-single-agent-starter-kit.git
+git remote add crowdai git@gitlab.crowdai.org:<YOUR_CROWDAI_USER_NAME>/marlo-multi-agent-starter-kit.git
 git push crowdai master
 
 # Create a tag for your submission and push
@@ -150,7 +153,7 @@ git push crowdai v0.1
 # then pushing a new tag will not trigger a new evaluation.
 ```
 You now should be able to see the details of your submission at : 
-[gitlab.crowdai.org/<YOUR_CROWDAI_USER_NAME>/marlo-single-agent-starter-kit/issues](gitlab.crowdai.org/<YOUR_CROWDAI_USER_NAME>/marlo-single-agent-starter-kit/issues)
+[gitlab.crowdai.org/<YOUR_CROWDAI_USER_NAME>/marlo-multi-agent-starter-kit/issues](gitlab.crowdai.org/<YOUR_CROWDAI_USER_NAME>/marlo-single-agent-starter-kit/issues)
 
 **NOTE**: Remember to update your username in the link above :wink:
 
