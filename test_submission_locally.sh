@@ -5,15 +5,18 @@
 # what happens on the evaluation serber
 ########################################################################
 
-export IMAGE_NAME="marlo_random_agent"
+export IMAGE_NAME="marlo_random_agents"
 
-# Build Image from the repository 
+# Build Image from the repository
 ./build.sh
 
-# Ensure you have a Minecraft Client running on port 10000
-# by doing : $MALMO_MINECRAFT_ROOT/launchClient.sh -port 10000
+# Ensure you have a Minecraft Clients running on port 10000 and 10001
+# by doing : 
+#    $MALMO_MINECRAFT_ROOT/launchClient.sh -port 10000
+# and 
+#    $MALMO_MINECRAFT_ROOT/launchClient.sh -port 10001
 
 docker run --net=host -it $IMAGE_NAME /home/crowdai/run.sh
 
-# Now if everything works out well, then you should see the agent inside 
-# the docker container interacting with the minecraft client on your host.
+# Now if everything works out well, then you should see the agents inside
+# the docker container interacting with the minecraft clients on your host.
