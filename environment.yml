@@ -25,7 +25,7 @@ dependencies:
   - openjdk=8.0.152
   - pip:
     - chardet==3.0.4
-    - crowdai-api==0.1.17
+    - crowdai-api==0.1.18
     - future==0.16.0
     - gym==0.10.5
     - idna==2.7
