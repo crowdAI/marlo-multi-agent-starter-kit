@@ -32,7 +32,7 @@ dependencies:
     - jinja2==2.10
     - lxml==4.2.5
     - markupsafe==1.0
-    - marlo==0.0.1.dev16
+    - marlo==0.0.1.dev18
     - numpy==1.15.2
     - pyglet==1.3.2
     - python-gitlab==1.6.0
