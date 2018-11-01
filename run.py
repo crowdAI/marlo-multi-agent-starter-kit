@@ -49,6 +49,7 @@ def get_join_tokens():
                                  })
     return join_tokens
 
+
 @marlo.threaded
 def run_agent(join_token, agent_id):
     """
@@ -66,9 +67,10 @@ def run_agent(join_token, agent_id):
         print("reward:", reward)
         print("done:", done)
         print("info", info)
-    
+
     # It is important to do this env.close()   
     env.close()
+
 
 def run_episode():
     """
@@ -91,15 +93,16 @@ def run_episode():
     """
     for _idx, join_token in enumerate(join_tokens):
         # Run agent-N on a separate thread
-        thread_handler, _ = run_agent(join_token, _idx)
+        thread_handler = run_agent(join_token, _idx)
         
         # Accumulate thread handlers
         thread_handlers.append(thread_handler)
-    
+
     # Wait for  threads to complete or raise an exception
-    marlo.utils.join_all(thread_handler)
-    
+    marlo.utils.join_all(thread_handlers)
+
     print("Episode Run Complete")
+
 
 if __name__ == "__main__":
     """
