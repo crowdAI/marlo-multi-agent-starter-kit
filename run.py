@@ -96,9 +96,8 @@ def run_episode():
         # Accumulate thread handlers
         thread_handlers.append(thread_handler)
     
-    # Wait for  threads to complete
-    for thread_handler in thread_handlers:
-        thread_handler.join()    
+    # Wait for  threads to complete or raise an exception
+    marlo.utils.join_all(thread_handler)
     
     print("Episode Run Complete")
 
