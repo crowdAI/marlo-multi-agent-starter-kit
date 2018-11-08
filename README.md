@@ -91,7 +91,7 @@ docker run --net=host -it $IMAGE_NAME /home/crowdai/run.sh
   Each repository should have a `crowdai.json` with the following content : 
 ```json
 {
-  "challenge_id" : "crowdai-marLo-2018",
+  "challenge_id" : "crowdai-marLo-2018-multi",
   "grader_id" : "crowdai-marLo-2018-multi",
   "authors" : ["your-crowdai-username"],
   "description" : "sample description about your awesome marlo agent",
