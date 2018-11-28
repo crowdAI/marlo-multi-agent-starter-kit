@@ -8,14 +8,14 @@ dependencies:
   - ca-certificates=2018.8.24
   - certifi=2018.8.24
   - libffi=3.2.1
-  - libgcc-ng=7.2.0
-  - libstdcxx-ng=7.2.0
+  - libgcc-ng=7.3.0
+  - libstdcxx-ng=7.3.0
   - ncurses=6.1
   - openssl=1.0.2p
   - pip=18.0
   - python=3.6.6
   - readline=7.0
-  - setuptools=40.4.0
+  - setuptools=39.1.0
   - sqlite=3.25.2
   - tk=8.6.8
   - wheel=0.31.1
@@ -41,4 +41,3 @@ dependencies:
     - six==1.11.0
     - urllib3==1.23
 prefix: /home/mohanty/anaconda3/envs/marlo-test
-
